@@ -17,7 +17,7 @@ export AWS_SECRET_ACCESS_KEY=MYSECRETACCESSKEY
 `packer build createaminginx.json`
 
 
-# After AMI is created
+## After AMI is created
 
 ## Install kitchen
 -  gem install inspec
