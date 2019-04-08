@@ -2,14 +2,26 @@
 export DEBIAN_FRONTEND=noninteractive
 # install nginx
 
-sudo apt-get update -y
-sudo apt-get install unzip socat jq dnsutils net-tools vim curl sshpass -y
-sudo apt-get install nginx -y
+export DEBIAN_FRONTEND=noninteractive
+export APTARGS="-qq -o=Dpkg::Use-Pty=0"
+sudo apt-get clean ${APTARGS}
+sudo apt-get update ${APTARGS}
+
+sudo apt-get upgrade -y ${APTARGS}
+sudo apt-get dist-upgrade -y ${APTARGS}
+
+
+which unzip socat jq dnsutils net-tools vim curl sshpass nginx &>/dev/null || {
+sudo apt-get update -y ${APTARGS}
+sudo apt-get install unzip socat jq dnsutils net-tools vim curl sshpass nginx -y ${APTARGS}
+}
 
 
 # install consul
+if [ -z "$CONSUL_VER" ]; then
+    CONSUL_VER=$(curl -sL https://releases.hashicorp.com/consul/index.json | jq -r '.versions[].version' | sort -V | egrep -v 'ent|beta|rc|alpha' | tail -n1)
+fi
 
-export CONSUL_VER="1.4.3"
 mkdir -p /tmp/pkg/
 curl -s https://releases.hashicorp.com/consul/${CONSUL_VER}/consul_${CONSUL_VER}_linux_amd64.zip -o /tmp/pkg/consul_${CONSUL_VER}_linux_amd64.zip
 echo "Installing Consul version ${CONSUL_VER} ..."
