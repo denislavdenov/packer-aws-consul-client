@@ -94,6 +94,10 @@ GEM
       multi_json
       retryable (~> 2.0)
       test-kitchen (~> 1.4, >= 1.4.1)
+    kitchen-inspec (1.1.0)
+      hashie (~> 3.4)
+      inspec (>= 1.47, < 5.0)
+      test-kitchen (>= 1.6, < 3)
     little-plugger (1.1.4)
     logging (2.2.2)
       little-plugger (~> 1.1)
@@ -222,9 +226,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  inspec
-  kitchen-ec2
-  test-kitchen
+  inspec!
+  kitchen-ec2!
+  kitchen-inspec!
+
+RUBY VERSION
+   ruby 2.3.1p112
 
 BUNDLED WITH
-   1.16.6
+   2.0.1
